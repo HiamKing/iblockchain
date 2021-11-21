@@ -1,4 +1,5 @@
 import * as CryptoJS from 'crypto-js';
+import {broadcastLatest} from './p2p';
 
 
 class Block {
@@ -68,6 +69,11 @@ class Blockchain {
     }
 
     public isValidNewBlock(newBlock: Block, prevBlock:Block): boolean {
+        if(!isValidBlockStructure(newBlock)) {
+            console.log('invalid structure');
+            return false;
+        }
+
         if(prevBlock.getIndex() + 1 !== newBlock.getIndex()) {
             console.log('invalid index');
             return false;
@@ -76,23 +82,20 @@ class Blockchain {
             console.log('invalid previous hash');
             return false;
         }
-        let calcHash = calcHashForBlock(newBlock);
-        if(calcHash !== newBlock.getHash()) {
-            console.log(typeof(calcHash) + ' & ' + typeof(newBlock.getHash()));
-            console.log('invalid hash: ' + calcHash + ' & ' + newBlock.getHash());
+        let hash = calcHashForBlock(newBlock);
+        if(hash !== newBlock.getHash()) {
+            console.log(typeof(hash) + ' & ' + typeof(newBlock.getHash()));
+            console.log('invalid hash: ' + hash + ' & ' + newBlock.getHash());
         }
     }
 
-    public isValidBlockStructure(block: Block): boolean {
-        return typeof(block.getIndex()) === 'number'
-            && typeof(block.getHash()) === 'string'
-            && typeof(block.getPrevHash()) === 'string'
-            && typeof(block.getTimestamp()) === 'number'
-            && typeof(block.getData()) === 'string'
-    }
+    public addBlock(newBlock: Block): boolean {
+        if(this.isValidNewBlock(newBlock, this.getLatestBlock())) {
+            this.blocks.push(newBlock);
+            return true;
+        }
 
-    public isValidGenesis(block: Block): boolean {
-        return JSON.stringify(block) === JSON.stringify(this.genesisBlock);
+        return false;
     }
 }
 
@@ -109,7 +112,7 @@ class Node {
     }
 
     public isValidChain(blockchain: Blockchain): boolean {
-        if(!blockchain.isValidGenesis(GENESIS_BLOCK)) return false;
+        if(!isValidGenesis(blockchain.getBlocks()[0])) return false;
 
         let blocks = blockchain.getBlocks();
         for(let i = 1; i < blocks.length; ++ i) {
@@ -123,7 +126,7 @@ class Node {
         if(this.isValidChain(newBlockchain)) {
             console.log('Received blockchain is valid. Replacing current blockchain with received blockchain...');
             this.blockchain = newBlockchain;
-            // broadcastLatest();
+            broadcastLatest();
         } else {
             console.log('Received blockchain is invalid');
         }
@@ -134,6 +137,19 @@ const calcHash = (index: number, previousHash: string, timestamp: number, data: 
     CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
 
 const calcHashForBlock = (block: Block): string =>
-    CryptoJS.SHA256(block.getIndex() + block.getPrevHash() + block.getTimestamp + block.getData()).toString();
+    calcHash(block.getIndex(), block.getPrevHash(), block.getTimestamp(), block.getData());
 
-export {Block, Blockchain, Node, calcHash, calcHashForBlock};
+const isValidBlockStructure = (block: Block): boolean => {
+    return typeof(block.getIndex()) === 'number'
+        && typeof(block.getHash()) === 'string'
+        && typeof(block.getPrevHash()) === 'string'
+        && typeof(block.getTimestamp()) === 'number'
+        && typeof(block.getData()) === 'string'
+}
+
+const isValidGenesis = (block: Block): boolean => {
+    return JSON.stringify(block) === JSON.stringify(GENESIS_BLOCK);
+}
+
+
+export {Block, Blockchain, Node, calcHash, calcHashForBlock, isValidBlockStructure, isValidGenesis};

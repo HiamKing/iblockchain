@@ -1,12 +1,13 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import { Block, Blockchain, Node } from './models';
-import {SOCKETS, initP2PServer} from './p2p';
+import { Block, Node } from './models';
+import {SOCKETS, initP2PServer, connectToPeers} from './p2p';
 
 
 const HTTP_PORT: number = parseInt(process.env.HTTP_PORT) || 3001;
 const P2P_PORT: number = parseInt(process.env.P2P_PORT) || 6001;
 const NODE = new Node();
+const BLOCKCHAIN = NODE.getBlockchain();
 
 
 const initHttpServer = (httpPort: number) => {
@@ -23,12 +24,12 @@ const initHttpServer = (httpPort: number) => {
     });
 
     app.get('/peers', (req, res) => {
-        // res.send(SOCKETS.map((s: any) => s._socket.remoteAddress + ':' +  s._socket.remotePort));
+        res.send(SOCKETS.map((s: any) => s._socket.remoteAddress + ':' +  s._socket.remotePort));
     });
 
     app.post('/add_peer', (req, res) => {
-        // connectToPeers(req.body.peer);
-        // res.send();
+        connectToPeers(req.body.peer);
+        res.send();
     });
 
     app.listen(HTTP_PORT, () => {
@@ -38,3 +39,5 @@ const initHttpServer = (httpPort: number) => {
 
 initHttpServer(HTTP_PORT);
 initP2PServer(P2P_PORT);
+
+export {NODE, BLOCKCHAIN};
