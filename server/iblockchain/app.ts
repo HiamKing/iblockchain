@@ -22,6 +22,7 @@ const initHttpServer = (httpPort: number) => {
     });
 
     app.get('/peers', (req, res) => {
+        console.log(getSockets());
         res.send(getSockets().map((s: any) => s._socket.remoteAddress + ':' +  s._socket.remotePort));
     });
 
