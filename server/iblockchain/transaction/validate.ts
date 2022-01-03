@@ -4,9 +4,9 @@ import {EC, COINBASE_AMOUNT} from './constants';
 import { Transaction, UnspentTxOut, TxIn, TxOut } from './models';
 import _ from 'lodash';
 
-const validateBlockTransactions = (transactions: Transaction[], unspentTxOuts: UnspentTxOut[], blockindex: number): boolean => {
+const validateBlockTransactions = (transactions: Transaction[], unspentTxOuts: UnspentTxOut[], blockIndex: number): boolean => {
   const coinbaseTx = transactions[0];
-  if(!validateCoinbaseTx(coinbaseTx, blockindex)) {
+  if(!validateCoinbaseTx(coinbaseTx, blockIndex)) {
     console.log('Invalid coinbase transaction: ' + JSON.stringify(coinbaseTx));
     return false;
   }
@@ -25,7 +25,7 @@ const validateBlockTransactions = (transactions: Transaction[], unspentTxOuts: U
   return normalTransactions.map((tx) => validateTransaction(tx, unspentTxOuts)).reduce((f, s) => f && s, true);
 }
 
-const validateCoinbaseTx = (transaction: Transaction, blockindex: number): boolean => {
+const validateCoinbaseTx = (transaction: Transaction, blockIndex: number): boolean => {
   if(transaction == null) {
     console.log('The first transaction in the block must be coinbase transaction');
     return false;
@@ -41,7 +41,7 @@ const validateCoinbaseTx = (transaction: Transaction, blockindex: number): boole
     return false;
   }
 
-  if(transaction.txIns[0].txOutIndex !== blockindex) {
+  if(transaction.txIns[0].txOutIndex !== blockIndex) {
     console.log('The txIn index in coinbase transaction must be the block height');
     return false;
   }
@@ -132,9 +132,9 @@ const hasDuplicates = (txIns: TxIn[]): boolean => {
  * 
  */
 
-const isValidTransactionsStructure = (transactions: Transaction[]): boolean => {
-  return transactions.map(isValidTransactionStructure).reduce((f, s) => (f && s), true);
-};
+// const isValidTransactionsStructure = (transactions: Transaction[]): boolean => {
+//   return transactions.map(isValidTransactionStructure).reduce((f, s) => (f && s), true);
+// };
 
 const isValidTransactionStructure = (transaction: Transaction): boolean => {
   if (typeof transaction.id !== 'string') {
@@ -229,3 +229,5 @@ const isValidAddress = (address: string): boolean => {
 
   return true;
 };
+
+export{ validateBlockTransactions };
