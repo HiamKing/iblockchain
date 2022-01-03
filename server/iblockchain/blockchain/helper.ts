@@ -1,3 +1,5 @@
+import * as CryptoJS from 'crypto-js';
+
 const calcHash = (index: number, previousHash: string, timestamp: number,
   difficulty: number, minterBalance: number, minterAddress: string): string =>
   CryptoJS.SHA256(index + previousHash + timestamp + difficulty + + minterBalance + minterAddress).toString();
