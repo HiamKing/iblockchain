@@ -6,7 +6,7 @@
     },
     "include": [
       "app.ts",
-      "models.ts"
+      "blockchain.ts"
     ],
     "exclude": [
       "node_modules"

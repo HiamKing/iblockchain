@@ -1,33 +1,7 @@
 import * as WebSocket from 'ws';
 import { Server } from 'ws';
-import { addBlockToChain, Block, getBlockchain, getLatestBlock, isValidBlockStructure, replaceChain } from './models';
 
 const sockets: WebSocket[] = [];
-
-enum MessageType {
-    QUERY_LATEST = 0,
-    QUERY_ALL = 1,
-    RESPONSE_BLOCKCHAIN = 2
-}
-
-class Message {
-    private type: MessageType;
-    private data: any;
-
-    constructor(type: MessageType, data: any) {
-        this.type = type;
-        this.data = data;
-    }
-
-    public getType(): MessageType {
-        return this.type;
-    }
-
-    public getData(): any {
-        return this.data;
-    }
-}
-
 
 const JSonToObject = <T>(data: string): T => {
     try {
