@@ -61,3 +61,5 @@ const isValidChain = (blockchain: Block[]): boolean => {
 const isValidTimestamp = (newBlock: Block, prevBlock: Block): boolean => {
   return (prevBlock.getTimestamp() - 60 < newBlock.getTimestamp()) && (newBlock.getTimestamp() - 60 < getCurrentTimestamp())
 }
+
+export {isValidBlockStructure};
