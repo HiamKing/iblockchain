@@ -4,7 +4,12 @@ class UnspentTxOut {
   public readonly address: string;
   public readonly amount: number;
 
-  constructor(txOutId: string, txOutIndex: number, address: string, amount: number) {
+  constructor(
+    txOutId: string,
+    txOutIndex: number,
+    address: string,
+    amount: number
+  ) {
     this.txOutId = txOutId;
     this.txOutIndex = txOutIndex;
     this.address = address;
@@ -34,4 +39,4 @@ class Transaction {
   public txOuts: TxOut[];
 }
 
-export {UnspentTxOut, TxIn, TxOut, Transaction};
+export { UnspentTxOut, TxIn, TxOut, Transaction };
