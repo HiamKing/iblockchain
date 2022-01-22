@@ -6,7 +6,7 @@
     },
     "include": [
       "app.ts",
-      "blockchain.ts"
+      "**/*.ts"
     ],
     "exclude": [
       "node_modules"

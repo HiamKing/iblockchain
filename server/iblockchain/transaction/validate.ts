@@ -16,7 +16,7 @@ const validateBlockTransactions = (transactions: Transaction[], unspentTxOuts: U
     .map((tx) => tx.Ins)
     .flatten()
     .value();
-  
+
   if(hasDuplicates(txIns)) {
     return false;
   }
@@ -60,6 +60,10 @@ const validateCoinbaseTx = (transaction: Transaction, blockIndex: number): boole
 };
 
 const validateTransaction = (transaction: Transaction, unspentTxOuts: UnspentTxOut[]): boolean => {
+  if(!isValidTransactionStructure(transaction)) {
+    return false;
+  }
+  
   if(getTransactionId(transaction) !== transaction.id) {
     console.log('Invalid transaction id: ' + transaction.id);
     return false;
@@ -159,6 +163,8 @@ const isValidTransactionStructure = (transaction: Transaction): boolean => {
   if(!transaction.txOuts.map(isValidTxOutStructure).reduce((f, s) => (f && s), true)) {
     return false;
   }
+
+  return true;
 }
 
 const isValidTxInStructure = (txIn: TxIn): boolean => {

@@ -97,5 +97,5 @@ const processTransactions = (transactions: Transaction[], unspentTxOuts: Unspent
   return updateUnspentTxOuts(transactions, unspentTxOuts);
 }
 
-export { processTransactions, signTxIn, getTransactionId, getTxInAmount, getCoinBaseTransaction};
+export { processTransactions, signTxIn, getTransactionId, getTxInAmount, getCoinBaseTransaction, getPublicKey};
 
