@@ -275,4 +275,4 @@ const isValidAddress = (address: string): boolean => {
   return true;
 };
 
-export { validateBlockTransactions, validateTransaction };
+export { validateBlockTransactions, validateTransaction, isValidAddress };
