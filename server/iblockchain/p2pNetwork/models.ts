@@ -10,3 +10,5 @@ class Message {
   public type: MessageType;
   public data: any;
 }
+
+export { Message, MessageType };

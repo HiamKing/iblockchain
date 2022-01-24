@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import blockRoutes from './block';
 import transactionRoutes from './transaction';
 import addressRoutes from './address';

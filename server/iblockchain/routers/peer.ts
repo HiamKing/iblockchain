@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import { connectToPeers, getSockets } from '../p2pNetwork/p2p';
 
 const router = express.Router();

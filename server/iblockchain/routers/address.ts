@@ -1,5 +1,5 @@
-import express from 'express';
-import _ from 'lodash';
+import * as express from 'express';
+import * as _ from 'lodash';
 import {
   getMyUnspentTransactionOutputs,
   getUnspentTxOuts,

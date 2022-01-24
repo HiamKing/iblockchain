@@ -1,4 +1,4 @@
-import ecdsa from 'elliptic';
+import * as ecdsa from 'elliptic';
 
 const EC = new ecdsa.ec('secp256k1');
 

@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import {
   getPublicKey,
   getTransactionId,

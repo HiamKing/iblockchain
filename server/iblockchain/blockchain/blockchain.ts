@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { broadcastLatest, broadcastTransactionPool } from '../p2pNetwork/p2p';
 import { Transaction, UnspentTxOut } from '../transaction/models';
 import { Block } from './models';

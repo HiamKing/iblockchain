@@ -1,5 +1,5 @@
-import CryptoJS from 'crypto-js';
-import _ from 'lodash';
+import * as CryptoJS from 'crypto-js';
+import * as _ from 'lodash';
 
 import { COINBASE_AMOUNT, EC } from './constants';
 import { toHexString } from './helper';

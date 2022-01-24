@@ -1,7 +1,7 @@
 import { getTransactionId, getTxInAmount } from './transaction';
 import { EC, COINBASE_AMOUNT } from './constants';
 import { Transaction, UnspentTxOut, TxIn, TxOut } from './models';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 const validateBlockTransactions = (
   transactions: Transaction[],
@@ -16,7 +16,7 @@ const validateBlockTransactions = (
 
   // check for duplicate txIns. Each txIn can be included only once
   const txIns: TxIn[] = _(transactions)
-    .map((tx) => tx.Ins)
+    .map((tx) => tx.txIns)
     .flatten()
     .value();
 

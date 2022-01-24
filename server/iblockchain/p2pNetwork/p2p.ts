@@ -12,6 +12,7 @@ import { isValidBlockStructure } from '../blockchain/validate';
 import { getTransactionPool } from '../transactionPool/transactionPool';
 import { JSonToObject } from './helper';
 import { Transaction } from '../transaction/models';
+import { Message, MessageType } from './models';
 
 const sockets: WebSocket[] = [];
 

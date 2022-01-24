@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import { getAccountBalance } from '../blockchain/blockchain';
 
 const router = express.Router();
