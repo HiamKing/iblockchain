@@ -1,18 +1,17 @@
 import _ from 'lodash';
-import { broadcastLatest } from '../p2pNetwork/p2p';
+import { broadcastLatest, broadcastTransactionPool } from '../p2pNetwork/p2p';
 import { Transaction, UnspentTxOut } from '../transaction/models';
 import { Block } from './models';
-import {
-  GENESIS_BLOCK,
-  MINTING_WITHOUT_COIN_BLOCKS,
-  BLOCK_GENERATION_INTERVAL,
-  DIFFICULTY_ADJUSTMENT_INTERVAL,
-} from './constants';
+import { GENESIS_BLOCK } from './constants';
 import {
   getCoinBaseTransaction,
   processTransactions,
 } from '../transaction/transaction';
-import { findBlock, getAccumulatedDifficulty, getDifficulty } from './consensus';
+import {
+  findBlock,
+  getAccumulatedDifficulty,
+  getDifficulty,
+} from './consensus';
 import {
   createTransaction,
   findUnspentTxOuts,
@@ -26,7 +25,6 @@ import {
   updateTransactionPool,
 } from '../transactionPool/transactionPool';
 import { isValidAddress } from '../transaction/validate';
-import { broadcastTransactionPool } from '../p2pNetwork/p2p';
 import { isValidChain, isValidNewBlock } from './validate';
 import { calcHash } from './helper';
 
@@ -63,7 +61,7 @@ const generateRawNextBlock = (blockData: Transaction[]): Block => {
   const prevBlock: Block = getLatestBlock();
   const difficulty: number = getDifficulty(getBlockchain());
   const nextIndex: number = prevBlock.index + 1;
-  const newBlock:   Block = findBlock(
+  const newBlock: Block = findBlock(
     nextIndex,
     prevBlock.hash,
     blockData,
@@ -137,8 +135,12 @@ const calcHashForBlock = (block: Block): string =>
 
 const addBlockToChain = (newBlock: Block): boolean => {
   if (isValidNewBlock(newBlock, getLatestBlock())) {
-    const retVal: UnspentTxOut[] = processTransactions(newBlock.data, getUnspentTxOuts(), newBlock.index);
-    if(retVal === null) {
+    const retVal: UnspentTxOut[] = processTransactions(
+      newBlock.data,
+      getUnspentTxOuts(),
+      newBlock.index
+    );
+    if (retVal === null) {
       console.log('Block is not valid in terms of transactions');
       return false;
     } else {
@@ -156,8 +158,14 @@ const replaceChain = (newBlockchain: Block[]): void => {
   const newUnspentTxOuts = isValidChain(newBlockchain);
   const validChain: boolean = newUnspentTxOuts !== null;
 
-  if(validChain && getAccumulatedDifficulty(newBlockchain) > getAccumulatedDifficulty(getBlockchain())) {
-    console.log('Received blockchain is valid. Replacing current blockchain with received blockchain');
+  if (
+    validChain &&
+    getAccumulatedDifficulty(newBlockchain) >
+      getAccumulatedDifficulty(getBlockchain())
+  ) {
+    console.log(
+      'Received blockchain is valid. Replacing current blockchain with received blockchain'
+    );
     curBlockchain = newBlockchain;
     setUnspentTxOuts(newUnspentTxOuts);
     updateTransactionPool(unspentTxOuts);
@@ -176,9 +184,13 @@ export {
   getUnspentTxOuts,
   getAccountBalance,
   getLatestBlock,
+  getMyUnspentTransactionOutputs,
   calcHashForBlock,
+  generateRawNextBlock,
+  generateNextBlockWithTransaction,
   generateNextBlock,
   replaceChain,
   addBlockToChain,
   handleReceivedTransaction,
+  sendTransaction,
 };

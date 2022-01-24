@@ -9,11 +9,6 @@ import { getBalance, getPublicKeyFromWallet } from '../wallet/wallet';
 import { getAccountBalance, getUnspentTxOuts } from './blockchain';
 import { isBlockStakingValid } from './validate';
 
-/**
- * Based on `SHA256(prevhash + address + timestamp) <= 2^256 * balance / diff`
- * Cf https://blog.ethereum.org/2014/07/05/stake/
- */
-
 const findBlock = (
   index: number,
   prevHash: string,
@@ -71,7 +66,7 @@ const getAdjustedDifficulty = (
   latestBlock: Block,
   blockchain: Block[]
 ): number => {
-  const prevAdjustmentBlock: Block =  
+  const prevAdjustmentBlock: Block =
     blockchain[blockchain.length - DIFFICULTY_ADJUSTMENT_INTERVAL];
   const timeExpected: number =
     BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;

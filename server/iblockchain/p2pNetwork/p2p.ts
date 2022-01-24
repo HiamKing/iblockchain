@@ -238,4 +238,10 @@ const connectToPeers = (newPeer: string): void => {
   });
 };
 
-export { getSockets, initP2PServer, broadcastLatest, connectToPeers, broadcastTransactionPool };
+export {
+  getSockets,
+  initP2PServer,
+  broadcastLatest,
+  connectToPeers,
+  broadcastTransactionPool,
+};

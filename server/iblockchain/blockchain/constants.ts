@@ -14,7 +14,7 @@ const GENESIS_TRANSACTION = {
 
 const GENESIS_BLOCK: Block = new Block(
   0,
-  '816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7',
+  '91a73664bc84c0baa1fc75ea6e4aa6d1d20c5df664c724e3159aefc2e1186627',
   '',
   1465154705,
   [GENESIS_TRANSACTION],
@@ -23,6 +23,7 @@ const GENESIS_BLOCK: Block = new Block(
   '04bfcab8722991ae774db48f934ca79cfb7dd991229153b9f732ba5334aafcd8e7266e47076996b55a14bf9913ee3145ce0cfc1372ada8ada74bd287450313534a'
 );
 
+// number of blocks that can be mint with accounts without any coins
 const MINTING_WITHOUT_COIN_BLOCKS = 100;
 
 // in seconds

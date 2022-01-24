@@ -7,6 +7,10 @@ import { UnspentTxOut } from '../transaction/models';
 import { GENESIS_BLOCK, MINTING_WITHOUT_COIN_BLOCKS } from './constants';
 import { processTransactions } from '../transaction/transaction';
 
+/**
+ * Based on `SHA256(prevhash + address + timestamp) <= 2^256 * balance / diff`
+ * Cf https://blog.ethereum.org/2014/07/05/stake/
+ */
 const isBlockStakingValid = (
   prevHash: string,
   address: string,
@@ -70,8 +74,8 @@ const hasValidHash = (block: Block): boolean => {
     !isBlockStakingValid(
       block.prevHash,
       block.minterAddress,
-      block.minterBalance,
       block.timestamp,
+      block.minterBalance,
       block.difficulty,
       block.index
     )
@@ -114,11 +118,11 @@ const isValidNewBlock = (newBlock: Block, prevBlock: Block): boolean => {
 const isValidChain = (blockchain: Block[]): UnspentTxOut[] => {
   console.log('Validate chain: ');
   console.log(JSON.stringify(blockchain));
-  const isValidGenesis  = (block: Block): boolean => {
+  const isValidGenesis = (block: Block): boolean => {
     return JSON.stringify(block) === JSON.stringify(GENESIS_BLOCK);
-  }
+  };
 
-  if(!isValidGenesis(blockchain[0])) {
+  if (!isValidGenesis(blockchain[0])) {
     return null;
   }
 
@@ -126,14 +130,18 @@ const isValidChain = (blockchain: Block[]): UnspentTxOut[] => {
   // and the transactions are valid
   let unspentTxOuts: UnspentTxOut[] = [];
 
-  for(let i = 0; i < blockchain.length; ++ i) {
+  for (let i = 0; i < blockchain.length; ++i) {
     const currentBlock: Block = blockchain[i];
-    if( i !== 0 && !isValidNewBlock(currentBlock, blockchain[i-1])) {
+    if (i !== 0 && !isValidNewBlock(currentBlock, blockchain[i - 1])) {
       return null;
     }
 
-    unspentTxOuts = processTransactions(currentBlock.data, unspentTxOuts, currentBlock.index);
-    if( unspentTxOuts === null) {
+    unspentTxOuts = processTransactions(
+      currentBlock.data,
+      unspentTxOuts,
+      currentBlock.index
+    );
+    if (unspentTxOuts === null) {
       console.log('Invalid transactions in blockchain');
       return null;
     }
@@ -142,4 +150,9 @@ const isValidChain = (blockchain: Block[]): UnspentTxOut[] => {
   return unspentTxOuts;
 };
 
-export { isValidBlockStructure, isBlockStakingValid, isValidNewBlock, isValidChain };
+export {
+  isValidBlockStructure,
+  isBlockStakingValid,
+  isValidNewBlock,
+  isValidChain,
+};
