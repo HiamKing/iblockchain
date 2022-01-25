@@ -107,11 +107,12 @@ const updateUnspentTxOuts = (
     .reduce((f, s) => f.concat(s), [])
     .map((txIn) => new UnspentTxOut(txIn.txOutId, txIn.txOutIndex, '', 0));
 
-  const resultUnspentTxOuts: UnspentTxOut[] = unspentTxOuts
+    const resultUnspentTxOuts: UnspentTxOut[] = unspentTxOuts
     .filter(
       (uTxO) => !findUnspentTxOut(uTxO.txOutId, uTxO.txOutIndex, consumedTxOuts)
-    )
-    .concat(newUnspentTxOuts);
+      )
+      .concat(newUnspentTxOuts);
+    console.log(newUnspentTxOuts, consumedTxOuts, resultUnspentTxOuts)
 
   return resultUnspentTxOuts;
 };

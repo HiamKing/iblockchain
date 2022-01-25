@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/', (req, res) => {
   try {
     const address = req.body.address;
-    const amount = req.body.address;
+    const amount = req.body.amount;
 
     if (address === undefined || amount === undefined) {
       throw Error('Invalid address or amount');
@@ -45,10 +45,6 @@ router.post('/minting', (req, res) => {
     console.log(e.message);
     res.status(400).send(e.message);
   }
-});
-
-router.get('/pool', (req, res) => {
-  res.send(getTransactionPool());
 });
 
 export default router;
