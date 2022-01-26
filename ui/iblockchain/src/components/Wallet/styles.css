@@ -1,0 +1,48 @@
+.wallet-label {
+  font-family: monospace;
+  font-size: 3rem;
+  font-weight: 550;
+  margin-bottom: 2rem;
+}
+
+.wallet-group {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  display: block;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.wallet-value {
+  margin-top: 0.4rem;
+  font-size: 1.3rem;
+}
+
+.wallet-action {
+  font-size: 1.3rem;
+  font-weight: 550;
+  margin-bottom: 2rem;
+}
+
+.receiver-address-input {
+  width: 80%;
+}
+
+.amount-input {
+  width: 20%;
+}
+
+.action-input {
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 95%;
+  padding: 0.5rem;
+}
+
+.action-group {
+  display: flex;
+  width: 100%;
+}
+

@@ -1,0 +1,40 @@
+.bl-explorer-label {
+  font-family: monospace;
+  font-size: 3rem;
+  font-weight: 550;
+  margin-bottom: 2rem;
+}
+
+.bl-explorer-group {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  display: block;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.bl-explorer-value {
+  margin-top: 0.4rem;
+  font-size: 1.3rem;
+}
+
+.bl-explorer-action {
+  font-size: 1.3rem;
+  font-weight: 550;
+  margin-bottom: 2rem;
+}
+
+.action-input {
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 95%;
+  padding: 0.5rem;
+}
+
+.action-group {
+  display: flex;
+  width: 100%;
+}
+

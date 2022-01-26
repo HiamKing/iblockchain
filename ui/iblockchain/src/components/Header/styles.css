@@ -16,6 +16,10 @@
   justify-content: center;
 }
 
+.header-link:hover {
+  color: #000;
+}
+
 .header-btn {
   display: flex;
   align-items: center;
@@ -43,4 +47,5 @@
   margin-left: 1rem;
   font-family: monospace;
   font-size: 1.2rem;
+  margin-top: auto;
 }
