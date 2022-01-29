@@ -11,7 +11,7 @@ class Wallet extends React.Component {
       const txIns = props.data.txIns.map((txIn) => (
         <div>
           {txIn.signature === '' && 'coinbase'}
-          {txIn !== '' && (
+          {txIn.signature !== '' && (
             <div className="text-break">{`${txIn.txOutId} ${txIn.txOutIndex}`}</div>
           )}
         </div>
@@ -23,21 +23,24 @@ class Wallet extends React.Component {
             <span>
               <b>Address:</b> {txOut.address} -{' '}
             </span>
-            <b>Amount:</b> {txOut.amount}{' '}
+            <b>Amount:</b> {txOut.amount}
           </div>
         </div>
       ));
 
       return (
-        <div className="container pb-3">
-          <b>Transaction id:</b>
-          <span className="text-break"> {props.data.id}</span>
-          <div className="row">
-            <div className="col-5">{txIns}</div>
-            <div className="col-1">{`->`}</div>
-            <div className="col-6">{txOuts}</div>
+        <React.Fragment>
+          <div className="container pb-3">
+            <b>Transaction id:</b>
+            <span className="text-break"> {props.data.id}</span>
+            <div className="row">
+              <div className="col-5">{txIns}</div>
+              <div className="col-1">{`->`}</div>
+              <div className="col-6">{txOuts}</div>
+            </div>
           </div>
-        </div>
+          <hr />
+        </React.Fragment>
       );
     },
   };
