@@ -6,7 +6,41 @@ import walletStore from './walletStore';
 import './styles.css';
 
 class Wallet extends React.Component {
-  transactionPoolColumns = [{ render: (rowData) => rowData }];
+  transactionPoolRow = {
+    Row: (props) => {
+      const txIns = props.data.txIns.map((txIn) => (
+        <div>
+          {txIn.signature === '' && 'coinbase'}
+          {txIn !== '' && (
+            <div className="text-break">{`${txIn.txOutId} ${txIn.txOutIndex}`}</div>
+          )}
+        </div>
+      ));
+
+      const txOuts = props.data.txOuts.map((txOut) => (
+        <div className="row">
+          <div className="text-break">
+            <span>
+              <b>Address:</b> {txOut.address} -{' '}
+            </span>
+            <b>Amount:</b> {txOut.amount}{' '}
+          </div>
+        </div>
+      ));
+
+      return (
+        <div className="container pb-3">
+          <b>Transaction id:</b>
+          <span className="text-break"> {props.data.id}</span>
+          <div className="row">
+            <div className="col-5">{txIns}</div>
+            <div className="col-1">{`->`}</div>
+            <div className="col-6">{txOuts}</div>
+          </div>
+        </div>
+      );
+    },
+  };
 
   componentDidMount() {
     walletStore.fetchWalletDetail();
@@ -15,7 +49,7 @@ class Wallet extends React.Component {
   render() {
     const store = walletStore;
 
-    if(store.walletDetail === null) return <Roller />;
+    if (store.walletDetail === null) return <Roller />;
 
     return (
       <div>
@@ -35,28 +69,46 @@ class Wallet extends React.Component {
               <div>Receiver address</div>
               <input
                 className="action-input"
+                name="address"
                 type="text"
                 placeholder="04f72a4541275aeb4344a8b04..."
+                onChange={store.handleTmpTransactionChange.bind(store)}
               />
             </div>
             <div className="amount-input">
               <div>Amount</div>
-              <input className="action-input" type="number" placeholder="0" />
+              <input
+                className="action-input"
+                name="amount"
+                type="number"
+                placeholder="0"
+                onChange={store.handleTmpTransactionChange.bind(store)}
+              />
             </div>
           </div>
-          <button className="btn btn-primary mt-3">Send</button>
+          <button
+            className="btn btn-primary mt-3"
+            onClick={store.sendTransaction.bind(store)}
+          >
+            Send
+          </button>
         </div>
         <div className="wallet-group">
           <div className="wallet-action">Transaction pool</div>
           <MaterialTable
             title={null}
             data={store.walletDetail.transactionPool}
-            columns={this.transactionPoolColumns}
+            components={this.transactionPoolRow}
           />
         </div>
         <div className="wallet-group">
           <div className="wallet-action">Mint block</div>
-          <button className="btn btn-primary">Click to mint block</button>
+          <button
+            className="btn btn-primary"
+            onClick={store.mintBlock.bind(store)}
+          >
+            Click to mint block
+          </button>
         </div>
       </div>
     );
