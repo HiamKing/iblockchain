@@ -1,22 +1,32 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+import MaterialTable from 'material-table';
+import { Roller } from 'react-awesome-spinners';
+import walletStore from './walletStore';
 import './styles.css';
 
 class Wallet extends React.Component {
+  transactionPoolColumns = [{ render: (rowData) => rowData }];
+
+  componentDidMount() {
+    walletStore.fetchWalletDetail();
+  }
+
   render() {
+    const store = walletStore;
+
+    if(store.walletDetail === null) return <Roller />;
+
     return (
       <div>
         <div className="wallet-label">iBlockchain Wallet</div>
         <div className="wallet-group">
           Your public address:
-          <div className="wallet-value">
-            a89sd0as7udasjdas09das0d9asusdadasjdoasdj9asd0as9jd
-          </div>
+          <div className="wallet-value">{store.walletDetail.address}</div>
         </div>
         <div className="wallet-group">
           Your balance:
-          <div className="wallet-value">
-            a89sd0as7udasjdas09das0d9asusdadasjdoasdj9asd0as9jd
-          </div>
+          <div className="wallet-value">{store.walletDetail.balance}</div>
         </div>
         <div className="wallet-group">
           <div className="wallet-action">Send coins</div>
@@ -38,6 +48,11 @@ class Wallet extends React.Component {
         </div>
         <div className="wallet-group">
           <div className="wallet-action">Transaction pool</div>
+          <MaterialTable
+            title={null}
+            data={store.walletDetail.transactionPool}
+            columns={this.transactionPoolColumns}
+          />
         </div>
         <div className="wallet-group">
           <div className="wallet-action">Mint block</div>
@@ -48,4 +63,4 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+export default observer(Wallet);

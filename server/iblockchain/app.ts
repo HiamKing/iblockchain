@@ -1,5 +1,6 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import * as cors from 'cors';
 import { initP2PServer } from './p2pNetwork/p2p';
 import getRouter from './routers/index';
 import { initWallet } from './wallet/wallet';
@@ -9,6 +10,7 @@ const P2P_PORT: number = parseInt(process.env.P2P_PORT) || 6001;
 
 const initHttpServer = (httpPort: number) => {
   const app = express();
+  app.use(cors());
   app.use(bodyParser.json());
 
   app.use((err, req, res, next) => {

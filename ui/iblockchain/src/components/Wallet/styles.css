@@ -15,6 +15,7 @@
 }
 
 .wallet-value {
+  word-break: break-word;
   margin-top: 0.4rem;
   font-size: 1.3rem;
 }

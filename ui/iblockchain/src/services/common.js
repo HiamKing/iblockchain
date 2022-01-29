@@ -34,6 +34,9 @@ const APIS = {
   transactionPool: {
     getTransactionPool: () => axios.get(`${API_ROOT}/transaction-pool`),
   },
+  wallet: {
+    getWalletDetail: () => axios.get(`${API_ROOT}/wallet`),
+  }
 };
 
 export default APIS;
