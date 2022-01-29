@@ -105,7 +105,7 @@ const generateNextBlockWithTransaction = (
     getUnspentTxOuts(),
     getTransactionPool()
   );
-  const blockData: Transaction[] = [coinbaseTx, tx]; dasdasdsa dont know why need add coinbase tx here
+  const blockData: Transaction[] = [coinbaseTx, tx];
   return generateRawNextBlock(blockData);
 };
 

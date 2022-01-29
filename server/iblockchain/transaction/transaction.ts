@@ -112,7 +112,6 @@ const updateUnspentTxOuts = (
       (uTxO) => !findUnspentTxOut(uTxO.txOutId, uTxO.txOutIndex, consumedTxOuts)
       )
       .concat(newUnspentTxOuts);
-    console.log(newUnspentTxOuts, consumedTxOuts, resultUnspentTxOuts)
 
   return resultUnspentTxOuts;
 };

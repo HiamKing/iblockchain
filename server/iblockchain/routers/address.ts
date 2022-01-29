@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as _ from 'lodash';
 import {
-  getMyUnspentTransactionOutputs,
   getUnspentTxOuts,
 } from '../blockchain/blockchain';
 import { UnspentTxOut } from '../transaction/models';
@@ -21,14 +20,6 @@ router.get('/:id', (req, res) => {
   );
 
   res.send({ unspentTxOuts: unspentTxOuts });
-});
-
-router.get('/unspent/outputs', (req, res) => {
-  res.send(getUnspentTxOuts());
-});
-
-router.get('/unspent/owned-outputs', (req, res) => {
-  res.send(getMyUnspentTransactionOutputs());
 });
 
 export default router;

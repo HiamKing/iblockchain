@@ -3,9 +3,10 @@ import * as _ from 'lodash';
 import {
   generateNextBlockWithTransaction,
   getBlockchain,
+  getMyUnspentTransactionOutputs,
+  getUnspentTxOuts,
   sendTransaction,
 } from '../blockchain/blockchain';
-import { getTransactionPool } from '../transactionPool/transactionPool';
 
 const router = express.Router();
 
@@ -45,6 +46,14 @@ router.post('/minting', (req, res) => {
     console.log(e.message);
     res.status(400).send(e.message);
   }
+});
+
+router.get('/unspent/outputs', (req, res) => {
+  res.send(getUnspentTxOuts());
+});
+
+router.get('/unspent/owned-outputs', (req, res) => {
+  res.send(getMyUnspentTransactionOutputs());
 });
 
 export default router;
