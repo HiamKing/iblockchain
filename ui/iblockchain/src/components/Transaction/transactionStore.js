@@ -18,13 +18,12 @@ class TransactionStore {
 
   fetchTransactionDetail() {
     APIS.transaction.getTransactionDetail(this.curTransactionId).then((res) => {
-      console.log(res.data);
       this.transactionDetail = res.data;
     });
   }
 
-  setCurTransactionId(hash) {
-    this.curTransactionId = hash;
+  setCurTransactionId(id) {
+    this.curTransactionId = id;
   }
 
   get totalAmount() {
