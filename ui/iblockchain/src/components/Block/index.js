@@ -39,7 +39,7 @@ class Block extends React.Component {
       return (
         <React.Fragment>
           <div className="container pb-3">
-            <b>Transaction id:</b>
+            <b>Transaction Id:</b>
             <Link
               className="text-decoration-none"
               to={`/transaction/${props.data.id}`}
@@ -57,6 +57,13 @@ class Block extends React.Component {
       );
     },
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.hash !== this.props.match.params.hash) {
+      blockStore.setCurBlockHash(this.props.match.params.hash);
+      blockStore.fetchBlockDetail();
+    }
+  }
 
   componentDidMount() {
     blockStore.setCurBlockHash(this.props.match.params.hash);

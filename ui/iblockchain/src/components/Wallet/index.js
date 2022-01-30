@@ -31,7 +31,7 @@ class Wallet extends React.Component {
       return (
         <React.Fragment>
           <div className="container pb-3">
-            <b>Transaction id:</b>
+            <b>Transaction Id:</b>
             <span className="text-break"> {props.data.id}</span>
             <div className="row">
               <div className="col-5">{txIns}</div>
