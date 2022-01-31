@@ -7,7 +7,7 @@ class Block {
   public timestamp: number;
   public data: Transaction[];
   public difficulty: number;
-  public minterBalance: number; // hack to avoid recalculating the balance of the minter at a precise height
+  public minterBalance: number;
   public minterAddress: string;
 
   constructor(
